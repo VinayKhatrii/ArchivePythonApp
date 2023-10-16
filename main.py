@@ -1,6 +1,6 @@
-from main_files import main
+from modules.start import main
 
-tasks = 1
+tasks = 5
 
 if __name__ == "__main__" :
     main(tasks)
