@@ -5,7 +5,7 @@ from time import sleep
 
 TRANSLATOR = Translator()
 
-def getEachLine(fileLocation):
+def getEachLine(fileLocation) -> list:
 
     with open(fileLocation, "r") as f:
         return [line.strip() for line in f if line.strip()!="" ]
@@ -15,22 +15,17 @@ def write_content(domain, result_content):
     with open("result.txt", "a") as f:
         f.write( f"{domain}\n" + "\n".join(result_content) + "\n\n")
 
-def dontSkip(i):
+def dontSkip(i) -> bool:
+    condition = { 10:1, 50:2, 70:3, 100:4, 200:5 }
     
-    if i < 10:
-        return i % 1 == 0
-    if i < 50:
-        return i % 2 == 0
-    if i < 70:
-        return i % 3 == 0
-    if i < 100:
-        return i % 4 == 0
-    if i < 200:
-        return i % 5 == 0
-    
+    for cond, mod in condition.keys():
+        if i < cond:
+            return i % mod == 0
+
     return i % 10 == 0
+
     
-def archiveTimestamp(domain, proxies):
+def archiveTimestamp(domain, proxies) -> list:
 
     try:
         api_url = f"https://web.archive.org/cdx/search/cdx?url={domain}&output=json&fl=timestamp"
@@ -74,7 +69,7 @@ def resultList(domain, html):
 
     return text, pages
 
-def noOfPages(hrefs, domain):
+def noOfPages(hrefs, domain) -> int:
 
     pages = 0
 
@@ -97,14 +92,12 @@ def noOfPages(hrefs, domain):
 
     return pages
 
-
-def engTranslate(text, language):
+def engTranslate(text, language) -> str:
     if language == 'en':
         return text
     else:
         translated = TRANSLATOR.translate(text).text
         return translated
-
 
 
 def unwantedLanguages(x_short):
@@ -139,10 +132,10 @@ def samePattern(results, generalInfo, url):
 
         for i, result in enumerate(results):
 
-            if ( len(results[i].split("\n")) > 4 and ( generalInfo in result ) ):
+            if len(results[i].split("\n")) > 4 and generalInfo in result:
                 return results
 
-            elif ( generalInfo in result ):
+            elif generalInfo in result:
 
                 results[i] += f"\nURL: {url}"
                 found = True
