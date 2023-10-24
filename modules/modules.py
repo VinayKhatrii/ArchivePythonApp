@@ -16,23 +16,25 @@ def write_content(domain, result_content):
         f.write( f"{domain}\n" + "\n".join(result_content) + "\n\n")
 
 def dontSkip(i):
-
-    if i < 10  : return i % 1 == 0
-    if i < 50  : return i % 2 == 0
-    if i < 70  : return i % 3 == 0
-    if i < 100 : return i % 4 == 0
-    if i < 200 : return i % 5 == 0
+    
+    if i < 10:
+        return i % 1 == 0
+    if i < 50:
+        return i % 2 == 0
+    if i < 70:
+        return i % 3 == 0
+    if i < 100:
+        return i % 4 == 0
+    if i < 200:
+        return i % 5 == 0
     
     return i % 10 == 0
     
 def archiveTimestamp(domain, proxies):
 
     try:
-
         api_url = f"https://web.archive.org/cdx/search/cdx?url={domain}&output=json&fl=timestamp"
-        
         response = requests.get(api_url)
-        
         response.raise_for_status()
         dates = response.json()
 
@@ -87,17 +89,22 @@ def noOfPages(hrefs, domain):
         for i in range(2, 20):
             try:
                 pages = max(pages, i) if condition(i, a, domain) else pages
-                if condition(i, a, domain) : pages = max(pages, i)
+                if condition(i, a, domain):
+                    pages = max(pages, i)
 
-            except Exception: continue
+            except Exception:
+                continue
 
     return pages
 
 
-
 def engTranslate(text, language):
+    if language == 'en':
+        return text
+    else:
+        translated = TRANSLATOR.translate(text).text
+        return translated
 
-    return ( text if (language == "en") else (TRANSLATOR.translate(text).text) )
 
 
 def unwantedLanguages(x_short):
@@ -105,7 +112,7 @@ def unwantedLanguages(x_short):
 
     x_language = {'zh-tw':"Chinese", 'zh-cn':"Chinese",'ja':'Japanese','ko':'Korean',"ja-jp":"Japanese","ja-jp-u-ca-japanese":"Japanese", "ja-jp-u-ca-japanese-t-ca-japanese":"Japanese", "ko-kr":"Korean","zh-hant":"Chinese","zh-hk":"Chinese","zh-mo":"Chinese","zh-sg":"Chinese","ar":"Arabic","ar-x":"Arabic","ar-eg":"Arabic",'he':"Hebrew",'he-il':"Hebrew",'th':"Thai",'hi':"Hindi",'mr':"Marathi",'fa':"Parsi"}
 
-    return ( x_language[x_short] if ( x_short.lower() in shorts ) else None )
+    return x_language[x_short] if x_short.lower() in shorts else None
 
 def unwantedThings(text, adultList, pbnWordsList):
 
@@ -128,7 +135,7 @@ def samePattern(results, generalInfo, url):
 
     found = False
 
-    if ( len(results) > 0 ):
+    if len(results) > 0:
 
         for i, result in enumerate(results):
 
@@ -144,7 +151,8 @@ def samePattern(results, generalInfo, url):
         if not found:
             results.append(f"{generalInfo}\nURL: {url}")
 
-    else : results.append(f"{generalInfo}\nURL: {url}")
+    else:
+        results.append(f"{generalInfo}\nURL: {url}")
 
     return results
 
@@ -153,14 +161,14 @@ def finalResult(found_adult_pbn_words, pages, results, url):
 
     joinedWords = ', '.join(found_adult_pbn_words)
 
-    if ( found_adult_pbn_words and ( pages != 0 ) ):
+    if found_adult_pbn_words and pages != 0:
         generalInfo = f"{pages} Pages, " + joinedWords
         return samePattern(results, generalInfo, url)
 
-    elif ( found_adult_pbn_words ):
+    elif found_adult_pbn_words:
         return samePattern(results,joinedWords, url)
 
-    elif ( pages != 0 ):
+    elif pages != 0:
         generalInfo = f"{pages} Pages"
         return samePattern(results, generalInfo, url)
 

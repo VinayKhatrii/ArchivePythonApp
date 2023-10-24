@@ -16,7 +16,7 @@ def checkHistory(domain, adultList, pbnWordsList, proxies):
     
     time_stamp = archiveTimestamp(domain, proxies)
     
-    if ( time_stamp[0] == "skipped" ) : 
+    if time_stamp[0] == "skipped": 
         return
     
     return analyze_archive(domain, adultList, pbnWordsList, time_stamp, proxies)
@@ -28,7 +28,8 @@ def analyze_archive(domain, adultList, pbnWordsList, time_stamp, proxies):
     
     for i, eachtimestamp in enumerate(time_stamp):
         
-        if ( len(results) == 5 ) : break
+        if len(results) == 5: 
+            break
         
         if dontSkip(i) :
             try:
@@ -49,13 +50,18 @@ def analyze_archive(domain, adultList, pbnWordsList, time_stamp, proxies):
                 found_adult_pbn_words = unwantedThings(translatedText, adultList, pbnWordsList)
                 
                 results = finalResult(found_adult_pbn_words, pages, results, url)
-            except (LangDetectException) : continue
+                
+            except (LangDetectException):
+                continue
             
             except requests.exceptions.HTTPError as e:
                 
-                if (e.response.status_code == 404) : continue
+                if (e.response.status_code == 404):
+                    continue
                 
-                elif (e.response.status_code == 429) : sleep(5); continue
+                elif (e.response.status_code == 429): 
+                    sleep(5)
+                    continue
 
             except Exception as e : 
                 print(e)

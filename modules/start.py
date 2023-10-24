@@ -24,6 +24,9 @@ def main(tasks):
     adultList = getEachLine("./Library/adult_words.txt")
     pbnWordsList = getEachLine("./Library/other_words.txt")
     proxies = getEachLine("proxies.txt")
+    if len(domains) == 0:
+        print("Please paste domains in domain file")
+        return
     try:
         proxies = proxies[0]
         splitted = proxies.split(":")
@@ -39,4 +42,5 @@ def main(tasks):
     tasks = 10 if ( tasks > 10 ) else tasks
     
     with ThreadPoolExecutor(max_workers=tasks) as executor: 
-        for domain in domains: executor.submit(process_domain, domain, adultList, pbnWordsList, proxies); sleep(1)
+        for domain in domains: executor.submit(process_domain, domain, adultList, pbnWordsList, proxies)
+        sleep(1)
