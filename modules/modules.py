@@ -10,7 +10,7 @@ def getEachLine(fileLocation) -> list:
     with open(fileLocation, "r") as f:
         return [line.strip() for line in f if line.strip()!="" ]
 
-def write_content(domain, result_content):
+def write_content(domain, result_content) -> None:
 
     with open("result.txt", "a") as f:
         f.write( f"{domain}\n" + "\n".join(result_content) + "\n\n")
@@ -53,14 +53,14 @@ def archiveTimestamp(domain, proxies) -> list:
 
         return ["skipped"]
     
-def archiveText(url, domain, proxies):
+def archiveText(url, domain, proxies) -> (str, int):
     response = requests.get(url, proxies=proxies)
     response.encoding = 'utf-8'
     response.raise_for_status()
     html = response.text
     return resultList(domain, html)
 
-def resultList(domain, html):
+def resultList(domain, html) -> (str, int):
 
     soup = BeautifulSoup(html, "html.parser")
     hrefs = soup.find_all("a")
@@ -105,14 +105,14 @@ def engTranslate(text, language) -> str:
         return translated
 
 
-def unwantedLanguages(x_short):
+def unwantedLanguages(x_short) -> str | None:
     shorts = ['ar', 'he', 'th','hi', 'mr', 'fa','zh-tw', 'zh-cn', "zh-hk", 'ja','ko', "ja-jp", "ko-kr", "ko-kp", "zh-hant",  "zh-mo", 'zh-sg', 'ar-x','ar-eg', 'he-il', "ja-jp-u-ca-japanese", "ja-jp-u-ca-japanese-t-ca-japanese"]
 
     x_language = {'zh-tw':"Chinese", 'zh-cn':"Chinese",'ja':'Japanese','ko':'Korean',"ja-jp":"Japanese","ja-jp-u-ca-japanese":"Japanese", "ja-jp-u-ca-japanese-t-ca-japanese":"Japanese", "ko-kr":"Korean","zh-hant":"Chinese","zh-hk":"Chinese","zh-mo":"Chinese","zh-sg":"Chinese","ar":"Arabic","ar-x":"Arabic","ar-eg":"Arabic",'he':"Hebrew",'he-il':"Hebrew",'th':"Thai",'hi':"Hindi",'mr':"Marathi",'fa':"Parsi"}
 
     return x_language[x_short] if x_short.lower() in shorts else None
 
-def unwantedThings(text, adultList, pbnWordsList):
+def unwantedThings(text, adultList, pbnWordsList) -> list:
 
     catchedWords = []
 
@@ -129,7 +129,7 @@ def unwantedThings(text, adultList, pbnWordsList):
     return catchedWords
 
 
-def samePattern(results, generalInfo, url):
+def samePattern(results, generalInfo, url) -> list:
 
     found = False
 
@@ -155,7 +155,7 @@ def samePattern(results, generalInfo, url):
     return results
 
 
-def finalResult(found_adult_pbn_words, pages, results, url):
+def finalResult(found_adult_pbn_words, pages, results, url) -> list:
 
     joinedWords = ', '.join(found_adult_pbn_words)
 

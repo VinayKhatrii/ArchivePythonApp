@@ -3,7 +3,7 @@ from .modules import write_content, getEachLine
 from concurrent.futures import ThreadPoolExecutor
 from time import sleep
 
-def process_domain(domain, adultList, pbnWordsList, proxies):
+def process_domain(domain, adultList, pbnWordsList, proxies) -> None:
 
     print(domain)
 
@@ -17,7 +17,7 @@ def process_domain(domain, adultList, pbnWordsList, proxies):
     except Exception as e :
         print(f"(Check Manually) {domain} : error :- {e}")
 
-def main(tasks):
+def main(tasks) -> None:
 
     domains = getEachLine("domains.txt")
     adultList = getEachLine("./Library/adult_words.txt")
