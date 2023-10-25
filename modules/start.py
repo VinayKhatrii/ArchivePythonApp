@@ -17,7 +17,6 @@ def process_domain(domain, adultList, pbnWordsList, proxies):
     except Exception as e :
         print(f"(Check Manually) {domain} : error :- {e}")
 
-
 def main(tasks):
 
     domains = getEachLine("domains.txt")
@@ -42,5 +41,6 @@ def main(tasks):
     tasks = 10 if ( tasks > 10 ) else tasks
     
     with ThreadPoolExecutor(max_workers=tasks) as executor: 
-        for domain in domains: executor.submit(process_domain, domain, adultList, pbnWordsList, proxies)
-        sleep(1)
+        for domain in reversed(domains): 
+            executor.submit(process_domain, domain, adultList, pbnWordsList, proxies)
+            sleep(1)

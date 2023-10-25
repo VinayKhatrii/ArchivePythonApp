@@ -36,7 +36,7 @@ def analyze_archive(domain, adultList, pbnWordsList, time_stamp, proxies):
                 url = f"http://web.archive.org/web/{eachtimestamp[0]}/{domain}"
                 
                 textContent, pages = archiveText(url, domain, proxies)
-                
+                print(textContent)
                 lang = detect(textContent)
                 
                 unwantedLang = unwantedLanguages(lang)

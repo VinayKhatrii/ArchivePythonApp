@@ -16,11 +16,16 @@ def write_content(domain, result_content):
         f.write( f"{domain}\n" + "\n".join(result_content) + "\n\n")
 
 def dontSkip(i) -> bool:
-    condition = { 10:1, 50:2, 70:3, 100:4, 200:5 }
-    
-    for cond, mod in condition.keys():
-        if i < cond:
-            return i % mod == 0
+    if i < 10:
+        return i % 1 == 0
+    if i < 50:
+        return i % 2 == 0
+    if i < 70:
+        return i % 3 == 0
+    if i < 100:
+        return i % 4 == 0
+    if i < 200:
+        return i % 5 == 0
 
     return i % 10 == 0
 
