@@ -17,7 +17,7 @@ def process_domain(domain, adultList, pbnWordsList, proxies) -> None:
     except Exception as e :
         print(f"(Check Manually) {domain} : error :- {e}")
 
-def main(tasks) -> None:
+def main(tasks: int) -> None:
 
     domains = getEachLine("domains.txt")
     adultList = getEachLine("./Library/adult_words.txt")

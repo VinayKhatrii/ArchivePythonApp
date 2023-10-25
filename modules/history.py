@@ -12,7 +12,7 @@ from .modules import (
 from langdetect import detect, LangDetectException
 from time import sleep
 
-def checkHistory(domain, adultList, pbnWordsList, proxies) -> list:
+def checkHistory(domain: str, adultList: list, pbnWordsList: list, proxies:dict) -> list:
     
     time_stamp = archiveTimestamp(domain, proxies)
     

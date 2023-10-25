@@ -5,7 +5,7 @@ from time import sleep
 
 TRANSLATOR = Translator()
 
-def getEachLine(fileLocation) -> list:
+def getEachLine(fileLocation: str) -> list:
 
     with open(fileLocation, "r") as f:
         return [line.strip() for line in f if line.strip()!="" ]
@@ -15,7 +15,7 @@ def write_content(domain, result_content) -> None:
     with open("result.txt", "a") as f:
         f.write( f"{domain}\n" + "\n".join(result_content) + "\n\n")
 
-def dontSkip(i) -> bool:
+def dontSkip(i: int) -> bool:
     if i < 10:
         return i % 1 == 0
     if i < 50:
@@ -78,7 +78,8 @@ def noOfPages(hrefs, domain) -> int:
 
     pages = 0
 
-    def condition(i, a, domain):
+    def condition(i, a, domain) -> bool:
+        
         conditionList = [f"/page/{i}", f"/page/{i}/", f"?page={i}/", f"?page={i}"]
 
         cond = any(str(a['href']).endswith(suffix) and domain in str(a['href']) for suffix in conditionList)
@@ -97,7 +98,7 @@ def noOfPages(hrefs, domain) -> int:
 
     return pages
 
-def engTranslate(text, language) -> str:
+def engTranslate(text:str, language: str) -> str:
     if language == 'en':
         return text
     else:
