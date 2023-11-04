@@ -29,7 +29,7 @@ def dontSkip(i: int) -> bool:
 
     return i % 10 == 0
 
-    
+
 def archiveTimestamp(domain, proxies) -> list:
 
     try:
