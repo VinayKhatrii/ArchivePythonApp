@@ -14,7 +14,7 @@ from time import sleep
 
 def checkHistory(domain: str, adultList: list, pbnWordsList: list, proxies:dict) -> list:
     
-    time_stamp = archiveTimestamp(domain, proxies)
+    time_stamp = archiveTimestamp(domain, proxies=None)
     
     if time_stamp[0] == "skipped": 
         return

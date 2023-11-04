@@ -15,7 +15,7 @@ def process_domain(domain, adultList, pbnWordsList, proxies) -> None:
             write_content(domain, results)
 
     except Exception as e :
-        print(f"(Check Manually) {domain} : error :- {e}")
+        print(f"{domain}: {e}")
 
 def main(tasks: int) -> None:
 
